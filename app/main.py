@@ -39,3 +39,20 @@ def get_task(task_id: int):
 def delete_task(task_id: int):
     if tasks.pop(task_id, None) is None:
         raise HTTPException(404, "Task not found")
+
+class TaskUpdate(BaseModel):
+    title: str | None = Field(default=None, min_length=3, max_length=100)
+    done: bool | None = None
+
+@app.patch("/tasks/{task_id}", response_model=Task)
+def update_task(task_id: int, body: TaskUpdate):
+    if task_id not in tasks:
+        raise HTTPException(404, "Task not found")
+
+    changes = body.model_dump(exclude_unset=True)
+    if not changes:
+        raise HTTPException(400, "No fields provided to update")
+
+    tasks[task_id] = tasks[task_id].model_copy(update=changes)
+    return tasks[task_id]
+
