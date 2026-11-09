@@ -5,11 +5,11 @@ steps:
     args: ["push", "$_IMAGE:$SHORT_SHA"]
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
-    args: ["run", "deploy", "task-tracker", "--image", "$_IMAGE:$SHORT_SHA",
+    args: ["run", "deploy", "gcp-mastery-git", "--image", "$_IMAGE:$SHORT_SHA",
            "--region", "asia-south1", "--no-traffic", "--tag", "canary",
            "--set-secrets", "API_KEY=task-api-key:latest",
            "--set-env-vars", "APP_ENV=cloud-run"]
 substitutions:
-  _IMAGE: asia-south1-docker.pkg.dev/${PROJECT_ID}/fastapi-repo/task-tracker
+  _IMAGE: asia-south1-docker.pkg.dev/${PROJECT_ID}/fastapi-repo/gcp-mastery-git
 options:
   logging: CLOUD_LOGGING_ONLY
