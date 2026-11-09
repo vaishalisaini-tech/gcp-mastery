@@ -2,7 +2,7 @@ import os, time, logging
 from fastapi import FastAPI, HTTPException, status, Depends, Request, Header
 from app.config import settings
 from app.logging_config import setup_logging
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 
 setup_logging()
 log = logging.getLogger("task-tracker")
